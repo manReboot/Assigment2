@@ -1,3 +1,10 @@
+/**
+ * @author Kalaiselvam ( 113260015)
+ * @version 1.0
+ * This class will be used to generate the bin-data.txt to be used to generate the repotr
+ *
+ *
+ */
 package com.mmu;
 
 import java.io.IOException;
@@ -20,11 +27,19 @@ public class ProductHistogram
 	public static Logger log = Logger.getLogger(ProductHistogram.class);
 	public static Map<String, Integer> recordMap = new HashMap<>();
 
+	/**
+	 * This inner class which be mapper class which will be use to split the output from
+	 * average-rating.txt to 
+	 */
 	public static class TokenizerMapperHisto extends	Mapper<Object, Text, Text, IntWritable> {
 
 		private final static IntWritable one = new IntWritable(1);
 		private Text bin = new Text();
 
+		/**
+		 * This method use to split the message
+		 * 
+		 */
 		public void map(Object key, Text value, Context context)
 				throws IOException, InterruptedException 
 		{
@@ -47,7 +62,12 @@ public class ProductHistogram
 		}
 		
 		
-		
+		/**
+		 * This method return the BIN id based on the count given
+		 * 
+		 * @param count average count
+		 * @return bin id
+		 */
 		protected int returnBinId( String count )
 		{
 			double countTemp = Double.parseDouble(count);
@@ -103,10 +123,12 @@ public class ProductHistogram
 		
 	}
 	
-	
-	
-	
-
+	/**
+	 * This class will be used as Reduce , reduce the data from the mapper class above to be 
+	 * and later to generate bin-data.txt
+	 * 
+	 *
+	 */
 	public static class IntSumReducerHisto extends Reducer<Text, IntWritable, Text, IntWritable> {
 		private IntWritable result = new IntWritable();
 
@@ -126,6 +148,13 @@ public class ProductHistogram
 		}
 	}
 
+	/**
+	 * This method will be the starting point for this class
+	 *  
+	 * @param inputPath where is the average file  is located in hfs
+	 * @param outputPath where the output filed need to be generated
+	 * @throws Exception
+	 */
 	public void productHistogram(String inputPath, String outputPath)
 			throws Exception {
 		Configuration conf = new Configuration();
@@ -148,7 +177,11 @@ public class ProductHistogram
 		    
 		    
 		 String formattedPath = outputPath+Master.fileSequence;
-		    
+		 /*
+		  * will copied the file to local directory based on the parameter in the args from the main method   
+		  */
 		 fs.copyToLocalFile(new Path(formattedPath), new Path(Master.localCopiedPathBin));
+		 
+		 log.info("*********THE BIN DATA COMPLETED*******");
 	}
 }

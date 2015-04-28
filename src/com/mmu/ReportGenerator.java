@@ -1,3 +1,10 @@
+/**
+ * @author Kalaiselvam ( 113260015)
+ * @version 1.0
+ * This class will be used to generate the bin-data.txt to be used to generate the repotr
+ *
+ *
+ */
 package com.mmu;
 
 import java.awt.Color;
@@ -20,6 +27,12 @@ public class ReportGenerator
 	Logger log = Logger.getLogger(this.getClass());
 	private double dataList[] ={0,0,0,0,0,0,0,0,0,0};
 	
+	/**
+	 * will generate the histogram based on the input file given
+	 * 
+	 * @param input localdirectory path of the filesystem
+	 * @throws IOException
+	 */
 	public void generateHistogram(String input) throws IOException
 	{
 
@@ -45,9 +58,14 @@ public class ReportGenerator
          
          br.close();
 		
+         log.info("*********THE REPORT GENERATION COMPLETED*******");
 	}
 
-	
+	/**
+	 * The setting of the bar char data and converting it to the image
+	 * 
+	 * @param histogramData 
+	 */
 	private void printGraph( String histogramData) 
 	{
 		 DefaultCategoryDataset bardataset = new DefaultCategoryDataset(); 

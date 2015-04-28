@@ -1,3 +1,10 @@
+/**
+ * @author Kalaiselvam ( 113260015)
+ * @version 1.0
+ * This class with acting as master class which will be calling the other
+ *
+ *
+ */
 package com.mmu;
 
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +17,16 @@ public class Master
 	public static String histoPath;
 	public final static String fileSequence="/part-r-00000";
 	
+	/**
+	 * This method will be used to master, which will be calling other class.
+	 * 
+	 * @param args array of String which accepted the 4 parameter
+	 * i) localfilepath - where you want to copied the result from HDS 
+	 * ii) inputfilepathInHDS - this location of the input file in the HDS
+	 * iii) hfsoutputpathRating - this location of the output file in the HDS for the average-rating
+	 * iv) hfsoutputpathHistogram - this location of the of the output of the HDS for the bin data
+	 * @throws Exception
+	 */
 	public static void main(String args[]) throws Exception
 	{
 		if( args.length < 4)
@@ -26,7 +43,12 @@ public class Master
 		 new ProductHistogram().productHistogram(args[2], args[3]);
 		 new ReportGenerator().generateHistogram(args[3]);
 	}
-	
+	/**
+	 * This method utility method which used to split the message
+	 * @param text which need to be splited
+	 * @param delimiter which need to be used to split it
+	 * @return array of string 
+	 */
 	public static String[] splitMessage(String text, String delimiter)
 	{
 		if( StringUtils.isNotEmpty(text) )
@@ -39,6 +61,12 @@ public class Master
 		
 	}
 	
+	/**
+	 * This method is use to concat multiple String together using a delimiter
+	 * @param delimiter which use to pipe the string 
+	 * @param tokens multiple string to be concat
+	 * @return the concat string
+	 */
 	public static String formatMessage( String delimiter,String ... tokens)
 	{
 		StringBuilder temp = new StringBuilder();
